@@ -7,6 +7,7 @@ export default registerAs('config', () => ({
       key: process.env.COIN_MARKET_API_KEY,
       baseUrl: process.env.COIN_MARKET_BASE_URL,
       listings: process.env.COIN_MARKET_LISTINGS,
+      info: process.env.COIN_MARKET_INFO,
     },
   },
 }));

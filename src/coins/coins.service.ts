@@ -21,6 +21,6 @@ export class CoinsService {
   }
 
   public async findById(id: number) {
-    return id;
+    return this.coinMarketService.getById(id);
   }
 }
