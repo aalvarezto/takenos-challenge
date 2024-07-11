@@ -1,17 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CoinMarketController } from './coins.controller';
+import { ReportsController } from './reports.controller';
 import { CoinMarketService } from './coin-market.service';
 
-describe('CoinMarketController', () => {
-  let controller: CoinMarketController;
+describe('ReportsController', () => {
+  let controller: ReportsController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [CoinMarketController],
+      controllers: [ReportsController],
       providers: [CoinMarketService],
     }).compile();
 
-    controller = module.get<CoinMarketController>(CoinMarketController);
+    controller = module.get<ReportsController>(ReportsController);
   });
 
   it('should be defined', () => {

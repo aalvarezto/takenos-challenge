@@ -5,7 +5,7 @@ import * as fs from 'fs/promises';
 import * as path from 'path';
 
 @Injectable()
-export class CoinsService {
+export class ReportsService {
   constructor(private readonly coinMarketService: CoinMarketService) {}
 
   public async testApi() {
