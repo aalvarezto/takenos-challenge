@@ -1,3 +1,4 @@
+import { Logger } from 'nestjs-pino';
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
@@ -5,11 +6,13 @@ import { AppModule } from './app.module';
 import { readPackageJson } from './utils';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { bufferLogs: true });
   const configService = app.get(ConfigService);
   const env = configService.get('NODE_ENV');
   const port = configService.get('PORT');
   const swaggerEndpoint = configService.get('SWAGGER_ENDPOINT') || 'api';
+
+  app.useLogger(app.get(Logger));
 
   const packageJson = await readPackageJson();
 
