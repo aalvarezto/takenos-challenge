@@ -1,18 +1,18 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AppService } from './app.service';
-import { AppController } from './app.controller';
-import { validationSchema } from '../config';
+import { validationSchema } from './config';
+import { CoinMarketModule } from './coin-market/coin-market.module';
+import configuration from './config/configuration';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
+      load: [configuration],
       isGlobal: true,
       envFilePath: '.env',
       validationSchema,
     }),
+    CoinMarketModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
