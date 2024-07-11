@@ -25,9 +25,12 @@ export class CriptoYaService {
 
   private addArsToOne = (coin: Datum | QuotesData) => {
     const observable = this.httpService
-      .get<CriptoYaRes | string>(`/api/argenbtc/${coin.symbol}/ars/1`, {
-        baseURL: 'https://criptoya.com',
-      })
+      .get<CriptoYaRes | string>(
+        `/api/${this.config.service.criptoYa.exchange}/${coin.symbol}/ars/1`,
+        {
+          baseURL: this.config.service.criptoYa.baseUrl,
+        },
+      )
       .pipe(
         map((data) =>
           typeof data.data === 'string' ? emptyConvertion : data.data,

@@ -9,5 +9,9 @@ export default registerAs('config', () => ({
       listings: process.env.COIN_MARKET_LISTINGS,
       quotes: process.env.COIN_MARKET_QUOTES,
     },
+    criptoYa: {
+      baseUrl: process.env.CRIPTO_YA_BASE_URL,
+      exchange: process.env.CRIPTO_YA_EXCHANGE,
+    },
   },
 }));
