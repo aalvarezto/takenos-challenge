@@ -25,7 +25,7 @@ export class ReportsService {
     }));
   }
 
-  public async findById(id: number) {
+  public async findById(id: string) {
     return this.coinMarketService.getById(id);
   }
 }

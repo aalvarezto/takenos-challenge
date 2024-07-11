@@ -17,6 +17,6 @@ export class ReportsController {
 
   @Get(':id')
   findById(@Param('id') id: string) {
-    return this.reportsService.findById(+id);
+    return this.reportsService.findById(id);
   }
 }

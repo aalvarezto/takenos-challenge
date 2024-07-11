@@ -3,7 +3,7 @@ import { ConfigType } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 import { catchError, firstValueFrom, map } from 'rxjs';
 import { HttpException, Inject, Injectable } from '@nestjs/common';
-import { CoinMarketListingsRes } from './interfaces';
+import { CoinMarketListingsRes, CoinMarketQuotesRes } from './interfaces';
 import configuration from '../config/configuration';
 
 @Injectable()
@@ -43,18 +43,21 @@ export class CoinMarketService {
     return firstValueFrom(observable);
   }
 
-  public getById(id: number) {
+  public getById(id: string) {
     const observable = this.httpService
-      .get<CoinMarketListingsRes>(this.config.service.coinMarket.info, {
-        baseURL: this.config.service.coinMarket.baseUrl,
-        headers: {
-          Accept: 'application/json',
-          'X-CMC_PRO_API_KEY': this.config.service.coinMarket.key,
+      .get<CoinMarketQuotesRes<typeof id>>(
+        this.config.service.coinMarket.quotes,
+        {
+          baseURL: this.config.service.coinMarket.baseUrl,
+          headers: {
+            Accept: 'application/json',
+            'X-CMC_PRO_API_KEY': this.config.service.coinMarket.key,
+          },
+          params: {
+            id,
+          },
         },
-        params: {
-          id,
-        },
-      })
+      )
       .pipe(
         map((data) => data.data),
         catchError((e: AxiosError) => {
