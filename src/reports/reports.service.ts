@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CoinMarketService } from './coin-market.service';
-import { CoinMarketListingsRes } from './interfaces';
+import { CoinMarketListingsRes, Datum, QuotesData } from './interfaces';
 import * as fs from 'fs/promises';
 import * as path from 'path';
 
@@ -16,16 +16,25 @@ export class ReportsService {
     return data.data.map((data) => data.name);
   }
 
+  private processCoin(coin: Datum & QuotesData) {
+    return {
+      id: coin.id,
+      name: coin.name,
+      variation: coin.quote.USD.percent_change_24h,
+    };
+  }
+
   public async findTopFive() {
     const { data: coins } = await this.coinMarketService.getTopFive();
 
-    return coins.map((coin) => ({
-      name: coin.name,
-      variation: coin.quote.USD.percent_change_24h,
-    }));
+    return coins.map(this.processCoin);
   }
 
   public async findById(id: string) {
-    return this.coinMarketService.getById(id);
+    const { data } = await this.coinMarketService.getById(id);
+
+    const [coinData] = Object.values(data).map(this.processCoin);
+
+    return coinData;
   }
 }
