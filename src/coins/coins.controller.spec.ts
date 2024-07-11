@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CoinMarketController } from './coin-market.controller';
+import { CoinMarketController } from './coins.controller';
 import { CoinMarketService } from './coin-market.service';
 
 describe('CoinMarketController', () => {
