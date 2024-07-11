@@ -16,8 +16,13 @@ export class ReportsService {
     return data.data.map((data) => data.name);
   }
 
-  public findTopFive() {
-    return this.coinMarketService.getTopFive();
+  public async findTopFive() {
+    const { data: coins } = await this.coinMarketService.getTopFive();
+
+    return coins.map((coin) => ({
+      name: coin.name,
+      variation: coin.quote.USD.percent_change_24h,
+    }));
   }
 
   public async findById(id: number) {

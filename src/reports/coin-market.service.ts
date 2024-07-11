@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import { ConfigType } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
-import { catchError, map } from 'rxjs';
+import { catchError, firstValueFrom, map } from 'rxjs';
 import { HttpException, Inject, Injectable } from '@nestjs/common';
 import { CoinMarketListingsRes } from './interfaces';
 import configuration from '../config/configuration';
@@ -15,7 +15,7 @@ export class CoinMarketService {
   ) {}
 
   public getTopFive() {
-    return this.httpService
+    const observable = this.httpService
       .get<CoinMarketListingsRes>(this.config.service.coinMarket.listings, {
         baseURL: this.config.service.coinMarket.baseUrl,
         headers: {
@@ -39,10 +39,12 @@ export class CoinMarketService {
           throw new HttpException(e.message, e.response.status);
         }),
       );
+
+    return firstValueFrom(observable);
   }
 
   public getById(id: number) {
-    return this.httpService
+    const observable = this.httpService
       .get<CoinMarketListingsRes>(this.config.service.coinMarket.info, {
         baseURL: this.config.service.coinMarket.baseUrl,
         headers: {
@@ -63,5 +65,7 @@ export class CoinMarketService {
           throw new HttpException(e.message, e.response.status);
         }),
       );
+
+    return firstValueFrom(observable);
   }
 }
