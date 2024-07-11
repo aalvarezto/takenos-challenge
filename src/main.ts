@@ -9,6 +9,7 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   const env = configService.get('NODE_ENV');
   const port = configService.get('PORT');
+  const swaggerEndpoint = configService.get('SWAGGER_ENDPOINT') || 'api';
 
   const packageJson = await readPackageJson();
 
@@ -19,12 +20,15 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup(swaggerEndpoint, app, document);
 
   await app.listen(port, () =>
     console.log(`
 NODE_ENV=${env}
-Listening on port ${port}`),
+Listening on port ${port}
+
+Swagger link: http://localhost:${port}/${swaggerEndpoint}
+`),
   );
 }
 

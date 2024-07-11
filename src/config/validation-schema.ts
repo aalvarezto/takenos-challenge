@@ -5,6 +5,7 @@ export const validationSchema = Joi.object({
     .valid('development', 'production', 'test', 'provision')
     .default('development'),
   PORT: Joi.number().port().default(3000),
+  SWAGGER_ENDPOINT: Joi.string().default('api'),
   COIN_MARKET_API_KEY: Joi.string()
     .uuid()
     .message('please provide a valid api key provided by coinmarket'),
