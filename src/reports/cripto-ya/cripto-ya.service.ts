@@ -23,6 +23,7 @@ export class CriptoYaService {
     private readonly httpService: HttpService,
   ) {}
 
+  // arrow function needed because of undefined value of this
   private addArsToOne = (coin: Datum | QuotesData) => {
     const observable = this.httpService
       .get<CriptoYaRes | string>(
