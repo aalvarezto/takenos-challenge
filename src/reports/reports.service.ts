@@ -1,6 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { CoinMarketService } from './coin-market.service';
-import { CoinMarketListingsRes, Datum, QuotesData } from './interfaces';
+import { CoinMarketService } from './coin-market/coin-market.service';
+import {
+  CoinMarketListingsRes,
+  Datum,
+  QuotesData,
+} from './coin-market/interfaces';
 import * as fs from 'fs/promises';
 import * as path from 'path';
 

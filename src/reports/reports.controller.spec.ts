@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ReportsController } from './reports.controller';
-import { CoinMarketService } from './coin-market.service';
+import { CoinMarketService } from './coin-market/coin-market.service';
 
 describe('ReportsController', () => {
   let controller: ReportsController;

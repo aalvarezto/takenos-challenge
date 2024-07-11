@@ -4,7 +4,7 @@ import { HttpService } from '@nestjs/axios';
 import { catchError, firstValueFrom, map } from 'rxjs';
 import { HttpException, Inject, Injectable } from '@nestjs/common';
 import { CoinMarketListingsRes, CoinMarketQuotesRes } from './interfaces';
-import configuration from '../config/configuration';
+import configuration from '../../config/configuration';
 
 @Injectable()
 export class CoinMarketService {
