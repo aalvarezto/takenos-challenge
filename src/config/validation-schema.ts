@@ -8,4 +8,6 @@ export const validationSchema = Joi.object({
   COIN_MARKET_API_KEY: Joi.string()
     .uuid()
     .message('please provide a valid api key provided by coinmarket'),
+  HTTP_MAX_REDIRECTS: Joi.number().default(5),
+  HTTP_TIMEOUT: Joi.number().default(30000),
 });
