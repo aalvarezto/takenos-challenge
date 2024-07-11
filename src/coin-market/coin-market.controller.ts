@@ -5,13 +5,18 @@ import { CoinMarketService } from './coin-market.service';
 export class CoinMarketController {
   constructor(private readonly coinMarketService: CoinMarketService) {}
 
-  @Get()
+  @Get('test-api')
   findAll() {
-    return this.coinMarketService.findAll();
+    return this.coinMarketService.testApi();
+  }
+
+  @Get()
+  findTopFive() {
+    return this.coinMarketService.findTopFive();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.coinMarketService.findOne();
+  findById(@Param('id') id: string) {
+    return this.coinMarketService.findById(+id);
   }
 }
