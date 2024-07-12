@@ -1,8 +1,8 @@
 import { Logger } from 'nestjs-pino';
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
-import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { Logger as AppLogger, ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
 import { readPackageJson } from './utils';
 
@@ -11,8 +11,10 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   const env = configService.get('NODE_ENV');
   const port = configService.get('PORT');
-  const swaggerEndpoint = configService.get('SWAGGER_ENDPOINT') || 'api';
+  const appPrefix = configService.get('APP_PREFIX') || '';
+  const swaggerEndpoint = configService.get('SWAGGER_ENDPOINT') || 'docs';
 
+  app.setGlobalPrefix(appPrefix);
   app.useLogger(app.get(Logger));
   app.useGlobalPipes(new ValidationPipe());
 
@@ -25,16 +27,24 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup(swaggerEndpoint, app, document);
+  SwaggerModule.setup(swaggerEndpoint, app, document, {
+    swaggerUiEnabled: env !== 'production',
+  });
 
-  await app.listen(port, () =>
-    console.log(`
+  await app.listen(port);
+
+  const logger = new AppLogger();
+
+  const swaggerLink = `Swagger link: http://localhost:${port}/${swaggerEndpoint}`;
+
+  logger.log(`
+
 NODE_ENV=${env}
+
 Listening on port ${port}
 
-Swagger link: http://localhost:${port}/${swaggerEndpoint}
-`),
-  );
+${env !== 'production' ? swaggerLink : `Swagger disabled`}
+`);
 }
 
 bootstrap();
