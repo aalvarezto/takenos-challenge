@@ -1,7 +1,8 @@
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { ReportsService } from './reports.service';
 import { CoinByIdParamDto } from './dto';
+import { EnvironmentGuard } from '../guards/enviroment.guard';
 
 @ApiTags('Reports')
 @Controller('reports')
@@ -9,6 +10,7 @@ export class ReportsController {
   constructor(private readonly reportsService: ReportsService) {}
 
   @Get('test-api')
+  @UseGuards(EnvironmentGuard)
   @ApiOperation({ summary: 'testing endpoint' })
   findAll() {
     return this.reportsService.testApi();
