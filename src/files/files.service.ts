@@ -1,14 +1,14 @@
-import { HttpException, Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
+import { HttpException, Inject, Injectable } from '@nestjs/common';
 import * as AWS from 'aws-sdk';
 import configuration from '../config/configuration';
 
 @Injectable()
 export class FilesService {
   readonly s3 = new AWS.S3({
+    region: this.config.aws.s3.region,
     accessKeyId: this.config.aws.s3.accessId,
     secretAccessKey: this.config.aws.s3.accessKey,
-    region: this.config.aws.s3.region,
   });
 
   constructor(
@@ -17,13 +17,11 @@ export class FilesService {
   ) {}
 
   public upload(file: Express.Multer.File) {
-    const { originalname } = file;
-
     return this.s3
       .upload({
-        Bucket: this.config.aws.s3.bucket,
-        Key: String(originalname),
+        Key: file.originalname,
         Body: file.buffer,
+        Bucket: this.config.aws.s3.bucket,
         ContentType: file.mimetype,
         ContentDisposition: 'inline',
       })
