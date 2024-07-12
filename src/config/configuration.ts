@@ -14,4 +14,12 @@ export default registerAs('config', () => ({
       exchange: process.env.CRIPTO_YA_EXCHANGE,
     },
   },
+  aws: {
+    s3: {
+      accessId: process.env.AWS_S3_ACCESS_ID,
+      accessKey: process.env.AWS_S3_ACCESS_KEY,
+      region: process.env.AWS_S3_REGION,
+      bucket: process.env.AWS_S3_BUCKET,
+    },
+  },
 }));
