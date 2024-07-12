@@ -1,14 +1,22 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
+import { Readable } from 'stream';
 
-class FileDto {
+class FileDto implements Express.Multer.File {
+  readonly buffer: Buffer;
+  readonly destination: string;
+  readonly fieldname: string;
   readonly filename: string;
-
+  readonly mimetype: string;
+  readonly originalname: string;
+  readonly path: string;
   readonly size: number;
+  readonly stream: Readable;
+  readonly encoding: string;
 }
 
-export class CreateFileDto {
+export class UploadFileDto {
   @ApiProperty({
     type: 'file',
     format: 'binary',
@@ -17,5 +25,5 @@ export class CreateFileDto {
   })
   @ValidateNested({ each: true })
   @Type(() => FileDto)
-  readonly files: FileDto[];
+  readonly files: Express.Multer.File[];
 }

@@ -9,7 +9,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FilesService } from './files.service';
-import { CreateFileDto } from './dto/create-file.dto';
+import { UploadFileDto } from './dto';
 
 @ApiTags('Files')
 @Controller('files')
@@ -41,11 +41,10 @@ export class FilesController {
       },
     }),
   )
-  create(
-    @Body() _: CreateFileDto,
-    @UploadedFiles() files: CreateFileDto['files'],
+  upload(
+    @Body() _: UploadFileDto,
+    @UploadedFiles() [file]: UploadFileDto['files'],
   ) {
-    console.log(files);
-    return;
+    return this.filesService.upload(file);
   }
 }
