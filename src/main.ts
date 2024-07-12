@@ -1,6 +1,7 @@
 import { Logger } from 'nestjs-pino';
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
+import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { readPackageJson } from './utils';
@@ -13,6 +14,7 @@ async function bootstrap() {
   const swaggerEndpoint = configService.get('SWAGGER_ENDPOINT') || 'api';
 
   app.useLogger(app.get(Logger));
+  app.useGlobalPipes(new ValidationPipe());
 
   const packageJson = await readPackageJson();
 
