@@ -43,8 +43,8 @@ export class ReportsService {
 
     const coins = await this.criptoYaService.addArs(...Object.values(data));
 
-    const [coinData] = coins.map(this.filterCoinData);
+    const [coin] = coins.map(this.filterCoinData);
 
-    return coinData;
+    return coin;
   }
 }
