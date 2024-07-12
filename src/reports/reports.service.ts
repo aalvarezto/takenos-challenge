@@ -15,7 +15,7 @@ export class ReportsService {
 
   public async testApi() {
     const data = JSON.parse(
-      await fs.readFile(path.resolve('foo.json'), 'utf-8'),
+      await fs.readFile(path.resolve('mock', 'data.json'), 'utf-8'),
     ) as CoinMarketListingsRes;
 
     return data.data.map((data) => data.name);
