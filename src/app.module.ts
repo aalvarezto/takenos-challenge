@@ -2,8 +2,9 @@ import { Module } from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
 import { LoggerModule } from 'nestjs-pino';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { validationSchema } from './config';
+import { FilesModule } from './files/files.module';
 import { ReportsModule } from './reports/reports.module';
+import { validationSchema } from './config';
 import configuration from './config/configuration';
 
 @Module({
@@ -30,6 +31,7 @@ import configuration from './config/configuration';
       inject: [ConfigService],
     }),
     ReportsModule,
+    FilesModule,
   ],
 })
 export class AppModule {}
