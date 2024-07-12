@@ -1,4 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { ReportsService } from './reports.service';
+import { CriptoYaService } from './cripto-ya/cripto-ya.service';
+import { TestConfigModule } from '../utils';
 import { ReportsController } from './reports.controller';
 import { CoinMarketService } from './coin-market/coin-market.service';
 
@@ -7,8 +10,9 @@ describe('ReportsController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [TestConfigModule],
       controllers: [ReportsController],
-      providers: [CoinMarketService],
+      providers: [ReportsService, CoinMarketService, CriptoYaService],
     }).compile();
 
     controller = module.get<ReportsController>(ReportsController);

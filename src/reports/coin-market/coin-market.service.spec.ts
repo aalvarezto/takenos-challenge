@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { TestConfigModule } from '../../utils';
 import { CoinMarketService } from './coin-market.service';
 
 describe('CoinMarketService', () => {
@@ -6,6 +7,7 @@ describe('CoinMarketService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [TestConfigModule],
       providers: [CoinMarketService],
     }).compile();
 
