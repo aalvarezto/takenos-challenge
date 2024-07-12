@@ -31,7 +31,6 @@ export class CoinMarketService {
       .pipe(
         map((data) => data.data),
         catchError((e: AxiosError) => {
-          console.log(e);
           if (!e?.response.status) {
             throw new HttpException('Internal Error', 500);
           }

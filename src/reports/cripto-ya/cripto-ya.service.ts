@@ -38,7 +38,6 @@ export class CriptoYaService {
         ),
         map((data) => ({ ...data, ...coin })),
         catchError((e: AxiosError) => {
-          console.log(e);
           if (!e?.response.status) {
             throw new HttpException('Internal Error', 500);
           }
